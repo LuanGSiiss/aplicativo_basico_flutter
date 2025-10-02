@@ -38,29 +38,42 @@ class MyApp extends StatelessWidget {
             ],
           ),
         ),
-        floatingActionButton: const ExpandableFab(
-          distance: 112.0,
-          children: [
-            ActionButton(
-              onPressed: null,
-              icon: Icon(Icons.mail),
-            ),
-            ActionButton(
-              onPressed: null,
-              icon: Icon(Icons.phone),
-            ),
-            ActionButton(
-              onPressed: null,
-              icon: Icon(Icons.share),
-            ),
-          ],
+        floatingActionButton: Builder(
+          builder: (context) => ExpandableFab(
+            distance: 112.0,
+            children: [
+              ActionButton(
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Adicionar item")),
+                  );
+                },
+              ),
+              ActionButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Editar item")),
+                  );
+                },
+              ),
+              ActionButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Deletar item")),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-// ---------- COMPONENTES ORIGINAIS ----------
 class TitleSection extends StatelessWidget {
   const TitleSection({super.key, required this.name, required this.location});
 
@@ -247,19 +260,19 @@ class _ExpandableFabState extends State<ExpandableFab>
   }
 
   Widget _buildMainFab() {
-  return FloatingActionButton(
-    onPressed: _toggle,
-    child: AnimatedSwitcher(
-      duration: const Duration(milliseconds: 250),
-      transitionBuilder: (child, animation) =>
+    return FloatingActionButton(
+      onPressed: _toggle,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 250),
+        transitionBuilder: (child, animation) =>
           RotationTransition(turns: animation, child: child),
-      child: Icon(
-        _open ? Icons.close : Icons.create,
-        key: ValueKey<bool>(_open),
+        child: Icon(
+          _open ? Icons.close : Icons.create,
+          key: ValueKey<bool>(_open),
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   List<Widget> _buildExpandingActionButtons() {
     final children = <Widget>[];
